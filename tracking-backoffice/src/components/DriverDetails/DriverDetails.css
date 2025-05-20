@@ -1,0 +1,77 @@
+.driver-details {
+  background-color: white;
+  border-top: 1px solid #ddd;
+  padding: 15px;
+  height: 150px;
+  flex-shrink: 0; /* Impedir que o painel de detalhes seja comprimido */
+}
+
+.details-header h2 {
+  margin: 0 0 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.info-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-item.wide {
+  flex: 3;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #555;
+  margin-right: 5px;
+}
+
+.info-value {
+  color: #333;
+}
+
+.info-value.status-moving {
+  color: #2ecc71;
+  font-weight: 600;
+}
+
+.info-value.status-stopped {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: white;
+}
+
+.action-btn.contact {
+  background-color: #3498db;
+}
+
+.action-btn.route {
+  background-color: #2ecc71;
+}
+
+.action-btn .icon {
+  margin-right: 5px;
+}

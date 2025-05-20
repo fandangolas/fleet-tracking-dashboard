@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  nats:
+    image: nats:latest
+    container_name: nats-server
+    ports:
+      - "4222:4222"
+      - "8222:8222"  # Interface de monitoramento
+    command: "-js"  # Habilita JetStream
+
+  simulador:
+    build:
+      context: ./driver-simulator
+    dockerfile: Dockerfile
+    container_name: driver-simulator
+    depends_on:
+      - nats
+    restart: unless-stopped
+
+  consumidor:
+    build:
+      context: ./tracking
+    dockerfile: Dockerfile
+    container_name: tracking-service
+    depends_on:
+      - nats
+    restart: unless-stopped

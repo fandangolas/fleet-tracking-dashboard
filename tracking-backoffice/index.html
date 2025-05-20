@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Distribuidora RJ - Sistema de Monitoramento</title>
+    
+    <!-- Link direto para o CSS do Leaflet (redundante, mas garante que será carregado) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzJhRW8Eu5hHC/rutH3He0ZUcgMqWAgKTVYZcWYKz9n+vEtiKwWxkE6YWyVA5SiQ=="
+     crossorigin=""/>
+    
+    <style>
+      /* Garantir que a altura da página e containers é correta */
+      html, body { 
+        height: 100%; 
+        margin: 0; 
+        padding: 0; 
+      }
+      #root { 
+        height: 100%; 
+      }
+      
+      /* Estilos específicos para o Leaflet */
+      .leaflet-container {
+        height: 100%;
+        width: 100%;
+      }
+      
+      /* Corrigir a referência ao ícone do marcador */
+      .leaflet-default-icon-path {
+        background-image: url(https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png);
+      }
+      .leaflet-default-shadow-path {
+        background-image: url(https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

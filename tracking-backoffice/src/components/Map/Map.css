@@ -1,0 +1,80 @@
+.map-container {
+  position: relative;
+  flex-grow: 1;
+  min-height: 400px; /* Definir uma altura mínima explícita */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+  min-height: 400px; /* Definir uma altura mínima explícita também para o mapa */
+  z-index: 1;
+}
+
+.map-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #f5f5f5;
+  color: #777;
+}
+
+.map-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.zoom-btn {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.zoom-in {
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+
+.zoom-out {
+  border-radius: 0 0 3px 3px;
+}
+
+.marker-select-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.custom-truck-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos específicos para o contêiner da área de conteúdo */
+.content-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: calc(100vh - 60px);
+}
