@@ -88,7 +88,7 @@ func startWebServer(db *memorydb.InMemoryDb) {
 }
 
 func startListeningStreams(db *memorydb.InMemoryDb) {
-	const natsServerURL string = "nats://localhost:4222"
+	const natsServerURL string = "nats://nats:4222"
 
 	natsConnection, err := nats.Connect(natsServerURL)
 
