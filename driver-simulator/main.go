@@ -17,7 +17,7 @@ type Localizacao struct {
 
 func main() {
 	// Conectar ao NATS
-	nc, err := nats.Connect(nats.DefaultURL) // ou "nats://localhost:4222"
+	nc, err := nats.Connect("nats://nats:4222")
 	if err != nil {
 		panic(err)
 	}
@@ -26,6 +26,21 @@ func main() {
 	js, err := nc.JetStream()
 	if err != nil {
 		panic(err)
+	}
+
+	// Criar o stream se não existir
+	streamName := "DRIVERS"
+	_, err = js.StreamInfo(streamName)
+	if err != nil {
+		fmt.Println("Stream não existe, criando...")
+		_, err = js.AddStream(&nats.StreamConfig{
+			Name:     streamName,
+			Subjects: []string{"location.drivers.*"},
+		})
+		if err != nil {
+			panic(fmt.Sprintf("Erro criando stream: %v", err))
+		}
+		fmt.Println("Stream criado com sucesso!")
 	}
 
 	// Ler o arquivo JSON
