@@ -1,28 +1,72 @@
-version: "3.8"
+version: '3.8'
 
 services:
+  # NATS Message Broker with JetStream
   nats:
     image: nats:latest
-    container_name: nats-server
+    container_name: fleet-nats
+    command: ["--jetstream", "--store_dir", "/data"]
     ports:
       - "4222:4222"
-      - "8222:8222"  # Interface de monitoramento
-    command: "-js"  # Habilita JetStream
+      - "8222:8222"  # HTTP monitoring port
+    volumes:
+      - nats_data:/data
+    networks:
+      - fleet-network
 
-  simulador:
+  # Driver Simulator Service
+  driver-simulator:
     build:
       context: ./driver-simulator
-    dockerfile: Dockerfile
-    container_name: driver-simulator
+      dockerfile: Dockerfile
+    container_name: fleet-driver-simulator
     depends_on:
       - nats
+    environment:
+      - NATS_URL=nats://nats:4222
+    networks:
+      - fleet-network
     restart: unless-stopped
 
-  consumidor:
+  # Tracking Service
+  tracking:
     build:
       context: ./tracking
-    dockerfile: Dockerfile
-    container_name: tracking-service
+      dockerfile: Dockerfile
+    container_name: fleet-tracking
+    ports:
+      - "8080:8080"  # Adjust port as needed for HTTP API
     depends_on:
       - nats
+    environment:
+      - NATS_URL=nats://nats:4222
+      - PORT=8080
+    networks:
+      - fleet-network
     restart: unless-stopped
+
+  # Tracking Backoffice (React App)
+  tracking-backoffice:
+    build:
+      context: ./tracking-backoffice
+      dockerfile: Dockerfile
+    container_name: fleet-backoffice
+    ports:
+      - "3000:80"  # Map local port 3000 to nginx port 80
+    depends_on:
+      - tracking
+    environment:
+      - REACT_APP_API_URL=http://tracking:8080  # Internal network communication
+      - REACT_APP_API_URL_EXTERNAL=http://localhost:8080  # For browser requests
+    networks:
+      - fleet-network
+    restart: unless-stopped
+
+networks:
+  fleet-network:
+    driver: bridge
+
+volumes:
+  # NATS JetStream data persistence
+  nats_data:
+    driver: local
